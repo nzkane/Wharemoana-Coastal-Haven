@@ -30,7 +30,15 @@ export default function Home() {
       <div className="sc-grain" aria-hidden="true"></div>
 
       <header className="site-bar">
-        <strong className="text-xl tracking-wide font-display">Wharemoana</strong>
+        <div className="brand-lockup" aria-label="Wharemoana">
+          <span className="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 42 24" focusable="false">
+              <path d="M2 17.5C7.5 5.5 16 5.5 21 12s11.5 8.5 19-3.5" />
+              <path d="M9 17.5c2-5 5.5-7 9-4.5 2.2 1.6 2.2 4.5-.6 5.8-2.1 1-4.2-.2-4.2-2.2 0-1.2.8-2.1 2-2.1" />
+            </svg>
+          </span>
+          <strong className="text-xl tracking-wide font-display">Wharemoana</strong>
+        </div>
         <a href="#contact" className="sc-cta">Book Your Stay</a>
       </header>
 
@@ -39,8 +47,8 @@ export default function Home() {
         <section data-sc-act="flow" data-sc-drift="#f5f2eb" className="relative h-screen flex items-center justify-center overflow-hidden">
           <img 
             className="hero-bg" 
-            src="/images/47-the-strand-apartment-ground-level-russell-pic-1.jpg" 
-            alt="House by the Sea Hero View" 
+            src="/images/47-the-strand-apartment-ground-level-russell-pic-3.jpg" 
+            alt="Wharemoana viewed from the street" 
           />
           <div className="sc-copy sc-copy--hero z-10" data-sc-cue="0 0.6 0">
             <h1 className="sc-display sc-display--xl text-white drop-shadow-md" data-sc-kinetic="lines">

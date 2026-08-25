@@ -296,6 +296,7 @@
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     object-fit: cover;
+    object-position: 58% 48%;
     filter: brightness(0.85);
     z-index: -1;
   }
@@ -354,6 +355,30 @@
     background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%);
     color: white;
   }
+  .brand-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: inherit;
+  }
+  .brand-mark {
+    display: inline-flex;
+    width: 2rem;
+    height: 1.35rem;
+    color: var(--sc-accent);
+  }
+  .brand-mark svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .brand-mark path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+  }
   .sc-cta {
     background-color: white;
     color: #172d36;
@@ -369,6 +394,18 @@
   }
   .sc-cta:hover {
     background-color: var(--sc-accent);
+  }
+}
+
+@media (max-width: 860px) {
+  .hero-bg {
+    object-position: 63% 47%;
+  }
+  .site-bar {
+    padding-inline: 1.25rem;
+  }
+  .brand-mark {
+    width: 1.75rem;
   }
 }
 
