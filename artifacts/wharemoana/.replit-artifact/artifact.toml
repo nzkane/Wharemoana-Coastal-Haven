@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Wharemoana Coastal Haven"
+description = "A cinematic single-page holiday rental site for House by the Sea in Russell, New Zealand, with scroll-driven storytelling, property photography, guest reviews, and booking contact details."
+version = "1.0.0"
+id = "artifacts/wharemoana"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21312
+
+[services.development]
+run = "pnpm --filter @workspace/wharemoana run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/wharemoana", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/wharemoana/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21312"
+BASE_PATH = "/"
