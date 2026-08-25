@@ -92,8 +92,8 @@ export default function Home() {
         <section data-sc-act="flow" data-sc-drift="#f5f2eb" className="relative h-screen flex items-center justify-center overflow-hidden">
           <img 
             className="hero-bg" 
-            src="/images/47-the-strand-apartment-ground-level-russell-pic-3.jpg" 
-            alt="Wharemoana viewed from the street" 
+            src="/images/47-the-strand-apartment-ground-level-russell-pic-10.jpg" 
+            alt="Wharemoana viewed from the beach" 
           />
           <div className="sc-copy sc-copy--hero z-10" data-sc-cue="0 0.6 0">
             <h1 className="sc-display sc-display--xl text-white drop-shadow-md" data-sc-kinetic="lines">

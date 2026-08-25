@@ -296,7 +296,7 @@
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     object-fit: cover;
-    object-position: 58% 48%;
+    object-position: 50% 38%;
     filter: brightness(0.85);
     z-index: -1;
   }
@@ -519,7 +519,7 @@
 
 @media (max-width: 860px) {
   .hero-bg {
-    object-position: 63% 47%;
+    object-position: 50% 42%;
   }
   .site-bar {
     padding-inline: 1.25rem;
