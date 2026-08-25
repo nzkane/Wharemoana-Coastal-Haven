@@ -106,16 +106,16 @@ export default function Home() {
         </section>
 
         {/* 2 · CONTEXT: Pinning the feeling */}
-        <section data-sc-act="pin" data-sc-span="3.0" data-sc-drift="#f5f2eb">
-          <div data-sc-stage className="sc-wrap flex flex-col md:flex-row items-center h-screen">
+        <section data-sc-act="flow" data-sc-drift="#f5f2eb">
+          <div data-sc-stage className="context-stage sc-wrap flex flex-col md:flex-row items-center h-screen">
             <div className="sc-stack flex-1 p-8 md:p-16 z-20">
-              <p className="sc-display sc-display--md" data-sc-cue="0 0.3">
+              <p className="sc-display sc-display--md" data-sc-cue="0 0.4 0 0.25">
                 Nestled in the heart of Russell, Bay of Islands...
               </p>
-              <p className="sc-display sc-display--md" data-sc-cue="0.3 0.6">
+              <p className="sc-display sc-display--md" data-sc-cue="0.27 0.68 0.1 0.25">
                 A sanctuary of tranquility with stunning panoramic views of the ocean.
               </p>
-              <p className="sc-display sc-display--md" data-sc-cue="0.6 1.0">
+              <p className="sc-display sc-display--md" data-sc-cue="0.58 1.0 0.1 0.25">
                 A sense of calm that is unique to this part of New Zealand.
               </p>
             </div>
@@ -161,18 +161,20 @@ export default function Home() {
         </section>
 
         {/* 4 · GALLERY: Pan */}
-        <section data-sc-act="pan" data-sc-span="2.5" data-sc-drift="#eae6dc" className="bg-[#eae6dc] py-20">
-          <div data-sc-stage className="flex items-center pl-[10vw] h-screen">
-            <img className="gallery-item shadow-2xl" src="/images/47-the-strand-apartment-ground-level-russell-pic-10.jpg" alt="Property View 1" />
-            <img className="gallery-item shadow-2xl" src="/images/47-the-strand-apartment-ground-level-russell-pic-15.jpg" alt="Property View 2" />
-            <img className="gallery-item shadow-2xl" src="/images/47-the-strand-apartment-ground-level-russell-pic-18.jpg" alt="Property View 3" />
-            <img className="gallery-item shadow-2xl" src="/images/AzRT8xsWDLcQL9frPSuXFfBPP68gnzkfmgGPsxCmnowuVp_VK83QtIkP7Bd-6IIMwiROqBrdlWDirPkD6G3uzN_6qHlCogqw-oBuRWLyG2SGXykKqjA74N8N-vg77cB8n6ToW5wMFOrOeg5hTFf5yumpw2SbxzjTTx8rNW8ugR8r4ss25c4=.jpg" alt="Property View 4" />
+        <section data-sc-act="pan" data-sc-span="1.8" data-sc-span-mobile="1.35" data-sc-drift="#eae6dc" className="gallery-section bg-[#eae6dc]">
+          <div data-sc-stage className="gallery-stage flex items-center h-screen" role="region" aria-label="Property gallery" tabIndex={0}>
+            <div data-sc-pan="0.08" className="gallery-rail flex items-center pl-[10vw]">
+              <img className="gallery-item shadow-2xl" src="/images/47-the-strand-apartment-ground-level-russell-pic-10.jpg" alt="Property View 1" />
+              <img className="gallery-item shadow-2xl" src="/images/47-the-strand-apartment-ground-level-russell-pic-15.jpg" alt="Property View 2" />
+              <img className="gallery-item shadow-2xl" src="/images/47-the-strand-apartment-ground-level-russell-pic-18.jpg" alt="Property View 3" />
+              <img className="gallery-item shadow-2xl" src="/images/AzRT8xsWDLcQL9frPSuXFfBPP68gnzkfmgGPsxCmnowuVp_VK83QtIkP7Bd-6IIMwiROqBrdlWDirPkD6G3uzN_6qHlCogqw-oBuRWLyG2SGXykKqjA74N8N-vg77cB8n6ToW5wMFOrOeg5hTFf5yumpw2SbxzjTTx8rNW8ugR8r4ss25c4=.jpg" alt="Property View 4" />
+            </div>
           </div>
         </section>
 
         {/* 5 · SOCIAL PROOF: Pin deconstructed */}
-        <section data-sc-act="pin" data-sc-span="3.0" data-sc-drift="#f5f2eb">
-          <div data-sc-stage className="sc-wrap flex flex-col md:flex-row gap-8 md:gap-16 items-center h-screen pt-20 md:pt-0">
+        <section data-sc-act="flow" data-sc-drift="#f5f2eb">
+          <div data-sc-stage className="testimonials-stage sc-wrap flex flex-col md:flex-row gap-8 md:gap-16 items-center md:items-start h-screen pt-20 md:pt-[8vh]">
             <div className="sc-stack flex-1 z-20">
               <h2 className="sc-display sc-display--lg">Guest Experiences</h2>
               <div className="rating-container flex flex-wrap gap-4 mt-8">
@@ -182,19 +184,19 @@ export default function Home() {
               </div>
             </div>
             <div className="flex-1 w-full grid">
-              <div className="review-card [grid-area:1/1]" data-sc-cue="0 0.3">
+              <div className="review-card [grid-area:1/1]" data-sc-cue="0 0.44 0 0.28">
                 <p className="sc-body italic text-lg leading-relaxed">
                   "A stunning, peaceful location with breathtaking views. We felt completely at home."
                 </p>
                 <strong className="sc-body block mt-4 text-foreground">— Sarah & Tom, Auckland</strong>
               </div>
-              <div className="review-card [grid-area:1/1]" data-sc-cue="0.4 0.7">
+              <div className="review-card [grid-area:1/1]" data-sc-cue="0.28 0.72 0.1 0.25">
                 <p className="sc-body italic text-lg leading-relaxed">
                   "Wharemoana is a slice of heaven. The house is beautiful and the private beach access made our stay unforgettable."
                 </p>
                 <strong className="sc-body block mt-4 text-foreground">— Jane D., Christchurch</strong>
               </div>
-              <div className="review-card [grid-area:1/1]" data-sc-cue="0.8 1.0">
+              <div className="review-card [grid-area:1/1]" data-sc-cue="0.56 1.0 0.1 0.25">
                 <p className="sc-body italic text-lg leading-relaxed">
                   "The perfect base to explore the Bay of Islands. The views are even better in person."
                 </p>
@@ -206,7 +208,7 @@ export default function Home() {
 
         {/* 6 · CLOSING: Contact */}
         <section id="contact" className="contact-section" data-sc-act="flow" data-sc-drift="#f5f2eb">
-          <div className="sc-wrap sc-stack contact-shell" data-sc-in>
+          <div className="sc-wrap sc-stack contact-shell">
             <div className="contact-intro">
               <p className="sc-label">Stay enquiry</p>
               <h2 className="sc-display sc-display--lg">Plan Your Escape</h2>

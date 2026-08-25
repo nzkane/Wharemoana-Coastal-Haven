@@ -330,11 +330,27 @@
     object-fit: cover;
     border-radius: 2rem;
     margin-right: 4rem;
+    flex: none;
+  }
+  .gallery-rail {
+    flex-shrink: 0;
+  }
+  .gallery-stage {
+    height: 80vh;
+  }
+  .context-stage,
+  .testimonials-stage {
+    height: auto !important;
+    min-height: 0;
+    padding-block: clamp(3rem, 7vw, 7rem);
+  }
+  .gallery-section {
+    padding-block: clamp(2rem, 4vw, 4rem);
   }
   @media (max-width: 768px) {
     .gallery-item {
       width: 85vw;
-      height: 60vh;
+      height: 68svh;
       margin-right: 1.5rem;
     }
   }
@@ -520,6 +536,58 @@
   }
   .enquiry-card {
     padding: 1.5rem;
+  }
+  .gallery-section {
+    padding-block: 0;
+  }
+  .contact-section {
+    padding-block: 6rem;
+  }
+
+  /* Pinned desktop chapters create large empty holds on a narrow viewport.
+     On touch-sized screens, keep the same content but let it read naturally. */
+  [data-sc-act="pin"].sc-act--pinned,
+  [data-sc-act="pan"].sc-act--pinned {
+    height: auto !important;
+  }
+  [data-sc-act="pin"] .sc-stage,
+  [data-sc-act="pan"] .sc-stage {
+    position: relative;
+    top: auto;
+    height: auto !important;
+    min-height: 0;
+  }
+  [data-sc-act="pin"] .sc-stage {
+    overflow: visible;
+  }
+  [data-sc-act="pin"] [data-sc-cue] {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+  }
+  [data-sc-act="pin"] .review-card {
+    grid-area: auto !important;
+  }
+  [data-sc-act="pan"] .sc-stage {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+  }
+  [data-sc-act="pan"] [data-sc-pan] {
+    transform: none !important;
+  }
+  [data-sc-act="pan"] .gallery-item {
+    scroll-snap-align: center;
+  }
+  .context-stage [data-sc-cue],
+  .testimonials-stage [data-sc-cue] {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+  }
+  .testimonials-stage .review-card {
+    grid-area: auto !important;
   }
 }
 

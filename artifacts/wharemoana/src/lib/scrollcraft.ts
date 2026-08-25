@@ -29,9 +29,10 @@
                    on the two slides and the settle lands inside the pin where
                    the copy is. data-sc-runout is accepted and ignored; it named
                    the old opt-in for the exit half of this.
-     data-sc-span  viewport-heights of scroll this act owns. Pinned devices only
-                   (scrub/pin/pan). Default 1.5. The engine sets the outer
-                   height and sticks the first .sc-stage / [data-sc-stage] child.
+      data-sc-span  viewport-heights of scroll this act owns. Pinned devices only
+                    (scrub/pin/pan). Default 1.5. Add data-sc-span-mobile for a
+                    shorter phone rhythm. The engine sets the outer height and
+                    sticks the first .sc-stage / [data-sc-stage] child.
 
      Every act exposes a normalized progress p (0..1):
        pinned  p = (y - top) / (height - vh)
@@ -511,7 +512,11 @@
     function layout() {
       vh = innerHeight; vw = innerWidth;
       acts.forEach(function (a) {
-        if (a.pinned) a.el.style.height = (a.span * 100) + 'vh';
+        if (a.pinned) {
+          var mobileSpan = parseFloat(a.el.getAttribute('data-sc-span-mobile'));
+          var span = isMobile() && !isNaN(mobileSpan) ? mobileSpan : a.span;
+          a.el.style.height = (span * 100) + 'vh';
+        }
       });
       // The spacer is the whole document flow of a worldflight. Its height is
       // the sum of the leg weights plus one viewport: without that extra screen
@@ -543,7 +548,7 @@
       // can see, and every automated check passes. Any author rule that sets
       // `position` on the stage causes it. Say so.
       acts.forEach(function (a) {
-        if (!a.pinned || !a.stage || a.stageChecked) return;
+        if (!a.pinned || !a.stage || a.stageChecked || isMobile()) return;
         a.stageChecked = true;
         var pos = getComputedStyle(a.stage).position;
         if (pos !== 'sticky' && pos !== '-webkit-sticky') {
