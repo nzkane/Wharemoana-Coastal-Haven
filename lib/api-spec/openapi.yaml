@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: enquiries
+    description: Guest stay enquiries
 paths:
   /healthz:
     get:
@@ -24,6 +26,31 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /enquiries:
+    post:
+      operationId: createStayEnquiry
+      tags: [enquiries]
+      summary: Prepare a stay enquiry email
+      description: Validates a guest enquiry and returns an addressed email draft for the property contact.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StayEnquiryInput"
+      responses:
+        "200":
+          description: Email draft prepared
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StayEnquiryResponse"
+        "400":
+          description: Invalid enquiry details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +60,59 @@ components:
           type: string
       required:
         - status
+    StayEnquiryInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          maxLength: 254
+        checkIn:
+          type: string
+          format: date
+        checkOut:
+          type: string
+          format: date
+        guests:
+          type: number
+          minimum: 1
+          maximum: 20
+        message:
+          type: string
+          minLength: 1
+          maxLength: 2000
+      required:
+        - name
+        - email
+        - checkIn
+        - checkOut
+        - guests
+        - message
+    StayEnquiryResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [ready]
+        recipient:
+          type: string
+        subject:
+          type: string
+        body:
+          type: string
+      required:
+        - status
+        - recipient
+        - subject
+        - body
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
 

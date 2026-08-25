@@ -1,0 +1,1 @@
+- [OpenAPI Zod compatibility](openapi-zod-compatibility.md) — Orval can emit Zod 4-only helpers despite this workspace’s Zod 3 runtime; inspect generated validators after spec changes.

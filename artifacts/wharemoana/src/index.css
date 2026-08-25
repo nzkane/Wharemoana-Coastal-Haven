@@ -448,6 +448,11 @@
     background: color-mix(in oklab, var(--sc-accent) 82%, white);
     transform: translateY(-1px);
   }
+  .enquiry-submit:disabled {
+    cursor: wait;
+    opacity: 0.65;
+    transform: none;
+  }
   .enquiry-feedback {
     margin-top: 1rem;
     font-size: 0.9rem;

@@ -1,12 +1,36 @@
 import { type FormEvent, useEffect, useRef, useState } from 'react';
+import { createStayEnquiry } from '@workspace/api-client-react';
 import "@/lib/scrollcraft"; // Side effect: attaches window.ScrollCraft
 
 const PROPERTY_EMAIL = 'info@housebythesea.co.nz';
 
+type EnquiryValues = {
+  name: string;
+  email: string;
+  checkIn: string;
+  checkOut: string;
+  guests: string;
+  message: string;
+};
+
+const emptyEnquiry: EnquiryValues = {
+  name: '',
+  email: '',
+  checkIn: '',
+  checkOut: '',
+  guests: '2',
+  message: '',
+};
+
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [enquiryLink, setEnquiryLink] = useState('');
-  const [enquiryError, setEnquiryError] = useState('');
+  const [enquiry, setEnquiry] = useState<EnquiryValues>(emptyEnquiry);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [feedback, setFeedback] = useState<{
+    kind: 'success' | 'error';
+    message: string;
+    mailto?: string;
+  } | null>(null);
   const [today] = useState(() => new Date().toISOString().slice(0, 10));
 
   useEffect(() => {
@@ -29,45 +53,53 @@ export default function Home() {
     };
   }, []);
 
-  function handleEnquirySubmit(event: FormEvent<HTMLFormElement>) {
+  const updateEnquiry = (field: keyof EnquiryValues, value: string) => {
+    setFeedback(null);
+    setEnquiry((current) => ({ ...current, [field]: value }));
+  };
+
+  const handleEnquirySubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = event.currentTarget;
-    const values = new FormData(form);
-    const name = String(values.get('name') ?? '').trim();
-    const email = String(values.get('email') ?? '').trim();
-    const arrival = String(values.get('arrival') ?? '');
-    const departure = String(values.get('departure') ?? '');
-    const guests = Number(values.get('guests'));
-    const message = String(values.get('message') ?? '').trim();
+    setIsSubmitting(true);
+    setFeedback(null);
 
-    if (departure <= arrival) {
-      setEnquiryError('Please choose a departure date after your arrival date.');
-      setEnquiryLink('');
-      return;
+    try {
+      const response = await createStayEnquiry({
+        ...enquiry,
+        guests: Number(enquiry.guests),
+      });
+      const mailto = `mailto:${response.recipient}?subject=${encodeURIComponent(response.subject)}&body=${encodeURIComponent(response.body)}`;
+
+      setFeedback({
+        kind: 'success',
+        message: 'Your email app should open with your enquiry addressed to Wharemoana. Please press send there to complete it.',
+        mailto,
+      });
+      setEnquiry(emptyEnquiry);
+      window.location.assign(mailto);
+    } catch (error) {
+      const responseData =
+        typeof error === 'object' && error !== null && 'data' in error
+          ? (error as { data?: unknown }).data
+          : undefined;
+      const serverMessage =
+        typeof responseData === 'object' &&
+        responseData !== null &&
+        'error' in responseData &&
+        typeof responseData.error === 'string'
+          ? responseData.error
+          : null;
+
+      setFeedback({
+        kind: 'error',
+        message: serverMessage
+          ? `${serverMessage} You can also email ${PROPERTY_EMAIL} directly.`
+          : `We could not prepare your email. Please try again or email ${PROPERTY_EMAIL} directly.`,
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    if (!Number.isInteger(guests) || guests < 1 || guests > 12) {
-      setEnquiryError('Please enter a guest count between 1 and 12.');
-      setEnquiryLink('');
-      return;
-    }
-
-    const body = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      `Dates: ${arrival} to ${departure}`,
-      `Guests: ${guests}`,
-      '',
-      message,
-    ].join('\n');
-
-    setEnquiryError('');
-    setEnquiryLink(
-      `mailto:${PROPERTY_EMAIL}?subject=${encodeURIComponent(
-        `Stay enquiry for Wharemoana · ${arrival} to ${departure}`,
-      )}&body=${encodeURIComponent(body)}`,
-    );
-  }
+  };
 
   return (
     <div ref={rootRef} className="scrollcraft-root font-sans text-foreground bg-background">
@@ -227,34 +259,89 @@ export default function Home() {
                 <div className="enquiry-fields">
                   <label className="enquiry-field">
                     <span>Name</span>
-                    <input name="name" type="text" autoComplete="name" required />
+                    <input
+                      name="name"
+                      type="text"
+                      autoComplete="name"
+                      value={enquiry.name}
+                      onChange={(event) => updateEnquiry('name', event.target.value)}
+                      maxLength={100}
+                      required
+                    />
                   </label>
                   <label className="enquiry-field">
                     <span>Email</span>
-                    <input name="email" type="email" autoComplete="email" required />
+                    <input
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      value={enquiry.email}
+                      onChange={(event) => updateEnquiry('email', event.target.value)}
+                      maxLength={254}
+                      required
+                    />
                   </label>
                   <label className="enquiry-field">
                     <span>Arrival</span>
-                    <input name="arrival" type="date" min={today} required />
+                    <input
+                      name="arrival"
+                      type="date"
+                      min={today}
+                      value={enquiry.checkIn}
+                      onChange={(event) => updateEnquiry('checkIn', event.target.value)}
+                      required
+                    />
                   </label>
                   <label className="enquiry-field">
                     <span>Departure</span>
-                    <input name="departure" type="date" min={today} required />
+                    <input
+                      name="departure"
+                      type="date"
+                      min={today}
+                      value={enquiry.checkOut}
+                      onChange={(event) => updateEnquiry('checkOut', event.target.value)}
+                      required
+                    />
                   </label>
                   <label className="enquiry-field enquiry-field--short">
                     <span>Guests</span>
-                    <input name="guests" type="number" min="1" max="12" defaultValue="2" required />
+                    <input
+                      name="guests"
+                      type="number"
+                      min="1"
+                      max="12"
+                      step="1"
+                      value={enquiry.guests}
+                      onChange={(event) => updateEnquiry('guests', event.target.value)}
+                      required
+                    />
                   </label>
                   <label className="enquiry-field enquiry-field--wide">
                     <span>Message</span>
-                    <textarea name="message" rows={3} placeholder="Tell us anything helpful about your stay." required />
+                    <textarea
+                      name="message"
+                      rows={3}
+                      value={enquiry.message}
+                      onChange={(event) => updateEnquiry('message', event.target.value)}
+                      placeholder="Tell us anything helpful about your stay."
+                      maxLength={2000}
+                      required
+                    />
                   </label>
                 </div>
-                <button className="enquiry-submit" type="submit">Prepare enquiry</button>
-                {enquiryError && <p className="enquiry-feedback enquiry-feedback--error" role="alert">{enquiryError}</p>}
-                {enquiryLink && (
-                  <p className="enquiry-feedback enquiry-feedback--success" role="status">
-                    Your enquiry is ready. <a href={enquiryLink}>Open your email app to send it.</a>
+                <button className="enquiry-submit" type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? 'Preparing your email…' : 'Send enquiry'}
+                </button>
+                {feedback && (
+                  <p
+                    className={`enquiry-feedback enquiry-feedback--${feedback.kind}`}
+                    role={feedback.kind === 'error' ? 'alert' : 'status'}
+                    aria-live="polite"
+                  >
+                    {feedback.message}{' '}
+                    {feedback.mailto && (
+                      <a href={feedback.mailto}>Open the email again</a>
+                    )}
                   </p>
                 )}
               </form>
