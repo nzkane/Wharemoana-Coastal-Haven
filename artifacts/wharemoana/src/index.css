@@ -310,14 +310,19 @@
   }
   @media (min-width: 861px) {
     .hero-bg {
-      object-position: 50% 55%;
+      object-position: 50% 45%;
     }
     .sc-copy--hero {
       max-width: 95vw;
     }
     .sc-copy--hero .sc-display--xl {
-      font-size: clamp(3rem, 7vw, 6.25rem);
+      font-size: clamp(3rem, 9.5vw, 6.25rem);
       white-space: nowrap;
+    }
+  }
+  @media (min-width: 861px) and (min-aspect-ratio: 2/1) {
+    .hero-bg {
+      object-position: 50% 55%;
     }
   }
   .review-card {
