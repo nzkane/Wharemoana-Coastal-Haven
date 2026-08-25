@@ -303,17 +303,9 @@
   .scrollcraft-root main > section:first-child {
     isolation: isolate;
   }
-  .hero-section::before {
-    content: "";
-    position: absolute;
-    inset: -1.5rem;
-    z-index: -2;
+  .hero-section {
     background:
-      linear-gradient(rgba(12, 31, 38, 0.42), rgba(12, 31, 38, 0.42)),
-      url("/images/47-the-strand-apartment-ground-level-russell-pic-10.jpg")
-        center 45% / cover no-repeat;
-    filter: blur(1.2rem);
-    transform: scale(1.04);
+      linear-gradient(180deg, #294f67 0%, #4c5d58 48%, #263d45 100%);
   }
   .sc-copy--hero {
     text-align: center;
@@ -322,8 +314,8 @@
   }
   @media (min-width: 861px) {
     .hero-bg {
-      object-fit: contain;
-      object-position: center;
+      object-fit: cover;
+      object-position: 50% 45%;
     }
     .sc-copy--hero {
       max-width: 95vw;
@@ -331,6 +323,14 @@
     .sc-copy--hero .sc-display--xl {
       font-size: clamp(3rem, 9.5vw, 6.25rem);
       white-space: nowrap;
+    }
+  }
+  @media (min-width: 861px) and (min-aspect-ratio: 1.6/1) {
+    .hero-bg {
+      object-fit: contain;
+      object-position: center;
+      background:
+        linear-gradient(180deg, #294f67 0%, #4c5d58 48%, #263d45 100%);
     }
   }
   @media (min-width: 861px) and (min-aspect-ratio: 2/1) {

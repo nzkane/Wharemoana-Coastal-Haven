@@ -1,1 +1,2 @@
 - [OpenAPI Zod compatibility](openapi-zod-compatibility.md) — Orval can emit Zod 4-only helpers despite this workspace’s Zod 3 runtime; inspect generated validators after spec changes.
+- [Portrait hero framing](portrait-hero-framing.md) — Preserve the full beach scene in short-wide desktop windows without distortion or a blurred duplicate.
