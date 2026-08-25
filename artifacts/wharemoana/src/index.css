@@ -560,20 +560,21 @@
     stroke-width: 1.7;
   }
   .sc-cta {
-    background-color: white;
-    color: #172d36;
-    padding: 0.75rem 1.5rem;
-    border-radius: 2rem;
+    background: transparent;
+    color: #fff8ec;
+    padding: 0.35rem 0.15rem;
+    border-radius: 0;
     text-decoration: none;
     font-weight: 500;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 3.25rem;
-    transition: all 0.2s ease;
+    text-shadow: 0 0 1rem rgba(255, 208, 143, 0.35);
+    transition: color 0.2s ease, text-shadow 0.2s ease;
   }
   .sc-cta:hover {
-    background-color: var(--sc-accent);
+    color: #fff;
+    text-shadow: 0 0 1.25rem rgba(255, 208, 143, 0.62);
   }
 }
 
@@ -656,8 +657,7 @@
   }
 }
 
-/* Scrollcraft's global link reset is intentionally unlayered, so the booking
-   action needs an unlayered colour override to remain legible on white. */
+/* Keep the text-only booking action above Scrollcraft's global link reset. */
 .sc-cta {
-  color: #172d36;
+  color: #fff8ec;
 }

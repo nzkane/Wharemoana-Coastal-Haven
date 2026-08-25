@@ -191,10 +191,10 @@ export default function Home() {
               </ul>
             </div>
             <figure className="flex-1 w-full" data-sc-reveal="up" data-sc-reveal-at="0.2 0.7">
-              <img 
-                  src="/images/wharemoana-street-exterior.png" 
+                <img 
+                  src="/images/47-the-strand-apartment-ground-level-russell-pic-5.jpg" 
                 className="w-full rounded-2xl shadow-xl"
-                  alt="Russell streetscape near Wharemoana"
+                  alt="Bedroom at Wharemoana"
               />
             </figure>
           </div>
