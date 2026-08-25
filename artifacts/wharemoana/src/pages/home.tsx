@@ -24,6 +24,7 @@ const emptyEnquiry: EnquiryValues = {
 
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
   const [enquiry, setEnquiry] = useState<EnquiryValues>(emptyEnquiry);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{
@@ -56,6 +57,13 @@ export default function Home() {
   const updateEnquiry = (field: keyof EnquiryValues, value: string) => {
     setFeedback(null);
     setEnquiry((current) => ({ ...current, [field]: value }));
+  };
+
+  const moveGallery = (direction: -1 | 1) => {
+    galleryRef.current?.scrollBy({
+      left: direction * galleryRef.current.clientWidth * 0.82,
+      behavior: 'smooth',
+    });
   };
 
   const handleEnquirySubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -184,23 +192,41 @@ export default function Home() {
             </div>
             <figure className="flex-1 w-full" data-sc-reveal="up" data-sc-reveal-at="0.2 0.7">
               <img 
-                src="/images/47-the-strand-apartment-ground-level-russell-pic-5.jpg" 
+                  src="/images/wharemoana-street-exterior.png" 
                 className="w-full rounded-2xl shadow-xl"
-                alt="Interior gourmet kitchen" 
+                  alt="Russell streetscape near Wharemoana"
               />
             </figure>
           </div>
         </section>
 
         {/* 4 · GALLERY: Pan */}
-        <section data-sc-act="pan" data-sc-span="1.8" data-sc-span-mobile="1.35" data-sc-drift="#eae6dc" className="gallery-section bg-[#eae6dc]">
-          <div data-sc-stage className="gallery-stage flex items-center h-screen" role="region" aria-label="Property gallery" tabIndex={0}>
-            <div data-sc-pan="0.08" className="gallery-rail flex items-center pl-[10vw]">
+        <section data-sc-act="flow" data-sc-drift="#eae6dc" className="gallery-section bg-[#eae6dc]">
+          <div data-sc-stage className="gallery-stage flex items-center h-screen" role="region" aria-label="Property gallery">
+            <button
+              type="button"
+              className="gallery-arrow gallery-arrow--prev"
+              aria-label="Previous gallery image"
+              aria-controls="property-gallery"
+              onClick={() => moveGallery(-1)}
+            >
+              <span aria-hidden="true">←</span>
+            </button>
+            <div ref={galleryRef} id="property-gallery" className="gallery-rail flex items-center pl-[10vw] pr-[10vw]" tabIndex={0}>
               <img className="gallery-item shadow-2xl" src="/images/47-the-strand-apartment-ground-level-russell-pic-10.jpg" alt="Property View 1" />
               <img className="gallery-item shadow-2xl" src="/images/47-the-strand-apartment-ground-level-russell-pic-15.jpg" alt="Property View 2" />
               <img className="gallery-item shadow-2xl" src="/images/47-the-strand-apartment-ground-level-russell-pic-18.jpg" alt="Property View 3" />
               <img className="gallery-item shadow-2xl" src="/images/AzRT8xsWDLcQL9frPSuXFfBPP68gnzkfmgGPsxCmnowuVp_VK83QtIkP7Bd-6IIMwiROqBrdlWDirPkD6G3uzN_6qHlCogqw-oBuRWLyG2SGXykKqjA74N8N-vg77cB8n6ToW5wMFOrOeg5hTFf5yumpw2SbxzjTTx8rNW8ugR8r4ss25c4=.jpg" alt="Property View 4" />
             </div>
+            <button
+              type="button"
+              className="gallery-arrow gallery-arrow--next"
+              aria-label="Next gallery image"
+              aria-controls="property-gallery"
+              onClick={() => moveGallery(1)}
+            >
+              <span aria-hidden="true">→</span>
+            </button>
           </div>
         </section>
 

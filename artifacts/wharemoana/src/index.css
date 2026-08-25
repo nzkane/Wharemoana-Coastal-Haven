@@ -334,9 +334,50 @@
   }
   .gallery-rail {
     flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .gallery-rail::-webkit-scrollbar {
+    display: none;
   }
   .gallery-stage {
+    position: relative;
     height: 80vh;
+    overflow: hidden;
+  }
+  .gallery-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: grid;
+    width: 3.25rem;
+    height: 3.25rem;
+    place-items: center;
+    border: 1px solid color-mix(in oklab, var(--sc-ink) 20%, transparent);
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--sc-surface) 88%, transparent);
+    color: var(--sc-ink);
+    font-size: 1.35rem;
+    line-height: 1;
+    box-shadow: 0 8px 24px rgba(26, 46, 53, 0.12);
+    transform: translateY(-50%);
+    transition: background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  }
+  .gallery-arrow:hover {
+    background: var(--sc-surface);
+    box-shadow: 0 12px 28px rgba(26, 46, 53, 0.18);
+    transform: translateY(-50%) scale(1.04);
+  }
+  .gallery-arrow--prev {
+    left: 1.25rem;
+  }
+  .gallery-arrow--next {
+    right: 1.25rem;
   }
   .context-stage,
   .testimonials-stage {
@@ -352,6 +393,20 @@
       width: 85vw;
       height: 68svh;
       margin-right: 1.5rem;
+    }
+    .gallery-rail {
+      padding-left: 2rem !important;
+      padding-right: 2rem !important;
+    }
+    .gallery-arrow {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+    .gallery-arrow--prev {
+      left: 0.75rem;
+    }
+    .gallery-arrow--next {
+      right: 0.75rem;
     }
   }
   .contact-section {
@@ -573,16 +628,11 @@
   [data-sc-act="pin"] .review-card {
     grid-area: auto !important;
   }
-  [data-sc-act="pan"] .sc-stage {
-    overflow-x: auto;
-    overflow-y: hidden;
+  .gallery-rail {
     overscroll-behavior-x: contain;
     scroll-snap-type: x proximity;
   }
-  [data-sc-act="pan"] [data-sc-pan] {
-    transform: none !important;
-  }
-  [data-sc-act="pan"] .gallery-item {
+  .gallery-item {
     scroll-snap-align: center;
   }
   .context-stage [data-sc-cue],
