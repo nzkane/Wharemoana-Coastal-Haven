@@ -129,7 +129,7 @@ export default function Home() {
 
       <main id="top">
         {/* 1 · RECOGNITION: Hero */}
-        <section data-sc-act="flow" data-sc-drift="#f5f2eb" className="relative h-screen flex items-center justify-center overflow-hidden">
+        <section data-sc-act="flow" data-sc-drift="#f5f2eb" className="hero-section relative h-screen flex items-center justify-center overflow-hidden">
           <img 
             className="hero-bg" 
             src="/images/47-the-strand-apartment-ground-level-russell-pic-10.jpg" 
