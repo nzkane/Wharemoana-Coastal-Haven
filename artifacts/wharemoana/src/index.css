@@ -560,6 +560,8 @@
     stroke-width: 1.7;
   }
   .sc-cta {
+    position: relative;
+    z-index: 0;
     background: transparent;
     color: #fff8ec;
     padding: 0.35rem 0.15rem;
@@ -569,12 +571,35 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    text-shadow: 0 0 1rem rgba(255, 208, 143, 0.35);
-    transition: color 0.2s ease, text-shadow 0.2s ease;
+    text-shadow:
+      0 0 0.3rem rgba(255, 208, 143, 0.95),
+      0 0 0.8rem rgba(255, 196, 117, 0.72),
+      0 0 1.6rem rgba(255, 176, 86, 0.48);
+    filter: drop-shadow(0 0 0.8rem rgba(255, 184, 102, 0.3));
+    transition: color 0.2s ease, text-shadow 0.2s ease, filter 0.2s ease;
+  }
+  .sc-cta::before {
+    content: "";
+    position: absolute;
+    inset: -0.55rem -0.9rem;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(
+      ellipse,
+      rgba(255, 204, 132, 0.34) 0%,
+      rgba(255, 184, 102, 0.2) 34%,
+      transparent 74%
+    );
+    filter: blur(0.65rem);
+    pointer-events: none;
   }
   .sc-cta:hover {
     color: #fff;
-    text-shadow: 0 0 1.25rem rgba(255, 208, 143, 0.62);
+    text-shadow:
+      0 0 0.35rem rgba(255, 225, 176, 1),
+      0 0 1rem rgba(255, 202, 137, 0.9),
+      0 0 2rem rgba(255, 176, 86, 0.66);
+    filter: drop-shadow(0 0 1rem rgba(255, 184, 102, 0.5));
   }
 }
 
