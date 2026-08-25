@@ -367,6 +367,7 @@
     border-radius: 1.25rem;
     box-shadow: var(--sc-e2);
     padding: clamp(1.5rem, 4vw, 3rem);
+    scroll-margin-top: 5rem;
   }
   .enquiry-lede {
     margin-top: 1rem;

@@ -84,7 +84,7 @@ export default function Home() {
           </span>
           <strong className="text-xl tracking-wide font-display">Wharemoana</strong>
         </div>
-        <a href="#contact" className="sc-cta">Book Your Stay</a>
+        <a href="#enquiry-form" className="sc-cta">Book Your Stay</a>
       </header>
 
       <main id="top">
@@ -218,7 +218,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="enquiry-card">
+            <div id="enquiry-form" className="enquiry-card">
               <h3 className="sc-display sc-display--md">Tell us about your stay</h3>
               <p className="sc-body enquiry-lede">Share a few details and we’ll help you find the right dates.</p>
               <form className="enquiry-form" onSubmit={handleEnquirySubmit}>
