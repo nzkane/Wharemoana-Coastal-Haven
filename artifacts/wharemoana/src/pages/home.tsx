@@ -1,8 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import "@/lib/scrollcraft"; // Side effect: attaches window.ScrollCraft
+
+const PROPERTY_EMAIL = 'info@housebythesea.co.nz';
 
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const [enquiryLink, setEnquiryLink] = useState('');
+  const [enquiryError, setEnquiryError] = useState('');
+  const [today] = useState(() => new Date().toISOString().slice(0, 10));
 
   useEffect(() => {
     if (!rootRef.current) return;
@@ -23,6 +28,46 @@ export default function Home() {
       if (timer) clearTimeout(timer);
     };
   }, []);
+
+  function handleEnquirySubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const values = new FormData(form);
+    const name = String(values.get('name') ?? '').trim();
+    const email = String(values.get('email') ?? '').trim();
+    const arrival = String(values.get('arrival') ?? '');
+    const departure = String(values.get('departure') ?? '');
+    const guests = Number(values.get('guests'));
+    const message = String(values.get('message') ?? '').trim();
+
+    if (departure <= arrival) {
+      setEnquiryError('Please choose a departure date after your arrival date.');
+      setEnquiryLink('');
+      return;
+    }
+
+    if (!Number.isInteger(guests) || guests < 1 || guests > 12) {
+      setEnquiryError('Please enter a guest count between 1 and 12.');
+      setEnquiryLink('');
+      return;
+    }
+
+    const body = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Dates: ${arrival} to ${departure}`,
+      `Guests: ${guests}`,
+      '',
+      message,
+    ].join('\n');
+
+    setEnquiryError('');
+    setEnquiryLink(
+      `mailto:${PROPERTY_EMAIL}?subject=${encodeURIComponent(
+        `Stay enquiry for Wharemoana · ${arrival} to ${departure}`,
+      )}&body=${encodeURIComponent(body)}`,
+    );
+  }
 
   return (
     <div ref={rootRef} className="scrollcraft-root font-sans text-foreground bg-background">
@@ -161,13 +206,56 @@ export default function Home() {
 
         {/* 6 · CLOSING: Contact */}
         <section id="contact" className="contact-section" data-sc-act="flow" data-sc-drift="#f5f2eb">
-          <div className="sc-wrap sc-stack max-w-2xl mx-auto" data-sc-in>
-            <h2 className="sc-display sc-display--lg">Plan Your Escape</h2>
-            <p className="sc-body text-xl my-8">We look forward to welcoming you to Russell.</p>
-            <div className="sc-body text-lg leading-loose opacity-80 bg-white/50 p-8 rounded-2xl border border-border">
-              <strong className="text-foreground">47 The Strand</strong><br />
-              Russell, 0202 Northland, New Zealand<br />
-              Email: <a href="mailto:info@housebythesea.co.nz" className="text-foreground hover:underline decoration-1 underline-offset-4 transition-all">info@housebythesea.co.nz</a>
+          <div className="sc-wrap sc-stack contact-shell" data-sc-in>
+            <div className="contact-intro">
+              <p className="sc-label">Stay enquiry</p>
+              <h2 className="sc-display sc-display--lg">Plan Your Escape</h2>
+              <p className="sc-body text-xl my-8">We look forward to welcoming you to Russell.</p>
+              <div className="contact-details sc-body text-lg leading-loose opacity-80">
+                <strong className="text-foreground">47 The Strand</strong><br />
+                Russell, 0202 Northland, New Zealand<br />
+                Email: <a href={`mailto:${PROPERTY_EMAIL}`} className="text-foreground hover:underline decoration-1 underline-offset-4 transition-all">{PROPERTY_EMAIL}</a>
+              </div>
+            </div>
+
+            <div className="enquiry-card">
+              <h3 className="sc-display sc-display--md">Tell us about your stay</h3>
+              <p className="sc-body enquiry-lede">Share a few details and we’ll help you find the right dates.</p>
+              <form className="enquiry-form" onSubmit={handleEnquirySubmit}>
+                <div className="enquiry-fields">
+                  <label className="enquiry-field">
+                    <span>Name</span>
+                    <input name="name" type="text" autoComplete="name" required />
+                  </label>
+                  <label className="enquiry-field">
+                    <span>Email</span>
+                    <input name="email" type="email" autoComplete="email" required />
+                  </label>
+                  <label className="enquiry-field">
+                    <span>Arrival</span>
+                    <input name="arrival" type="date" min={today} required />
+                  </label>
+                  <label className="enquiry-field">
+                    <span>Departure</span>
+                    <input name="departure" type="date" min={today} required />
+                  </label>
+                  <label className="enquiry-field enquiry-field--short">
+                    <span>Guests</span>
+                    <input name="guests" type="number" min="1" max="12" defaultValue="2" required />
+                  </label>
+                  <label className="enquiry-field enquiry-field--wide">
+                    <span>Message</span>
+                    <textarea name="message" rows={3} placeholder="Tell us anything helpful about your stay." required />
+                  </label>
+                </div>
+                <button className="enquiry-submit" type="submit">Prepare enquiry</button>
+                {enquiryError && <p className="enquiry-feedback enquiry-feedback--error" role="alert">{enquiryError}</p>}
+                {enquiryLink && (
+                  <p className="enquiry-feedback enquiry-feedback--success" role="status">
+                    Your enquiry is ready. <a href={enquiryLink}>Open your email app to send it.</a>
+                  </p>
+                )}
+              </form>
             </div>
           </div>
         </section>
