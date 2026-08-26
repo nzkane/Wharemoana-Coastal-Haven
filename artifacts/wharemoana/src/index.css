@@ -750,3 +750,9 @@
 .sc-cta {
   color: #fff8ec;
 }
+
+/* Scrollcraft typography is intentionally unlayered, so this contact-specific
+   rhythm rule must also be unlayered to override its zero-margin reset. */
+.contact-intro > p.sc-body {
+  margin-top: clamp(1.75rem, 4vw, 3rem);
+}
