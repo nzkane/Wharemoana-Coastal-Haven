@@ -756,3 +756,11 @@
 .contact-intro > p.sc-body {
   margin-top: clamp(1.75rem, 4vw, 3rem);
 }
+
+@media (min-width: 861px) {
+  /* Let the desktop hero headline span the image instead of inheriting
+     Scrollcraft's narrow copy-column measure. */
+  .sc-copy--hero {
+    max-width: none;
+  }
+}
