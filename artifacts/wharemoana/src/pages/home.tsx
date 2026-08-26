@@ -235,10 +235,10 @@ export default function Home() {
           <div data-sc-stage className="testimonials-stage sc-wrap flex flex-col md:flex-row gap-8 md:gap-16 items-center md:items-start h-screen pt-20 md:pt-[8vh]">
             <div className="sc-stack flex-1 z-20">
               <h2 className="sc-display sc-display--lg">Guest Experiences</h2>
-              <div className="rating-container flex flex-wrap gap-4 mt-8">
-                <span className="rating-badge" data-sc-count="9.5">Booking.com</span>
-                <span className="rating-badge" data-sc-count="9.0">Google</span>
-                <span className="rating-badge" data-sc-count="9.2">TripAdvisor</span>
+              <div className="rating-container flex flex-wrap gap-4 mt-8" aria-label="Guest ratings out of ten">
+                <span className="rating-badge" data-sc-count="0 9.5" aria-label="Booking.com rating: 9.5 out of 10">Booking.com</span>
+                <span className="rating-badge" data-sc-count="0 9.0" aria-label="Google rating: 9.0 out of 10">Google</span>
+                <span className="rating-badge" data-sc-count="0 9.2" aria-label="TripAdvisor rating: 9.2 out of 10">TripAdvisor</span>
               </div>
             </div>
             <div className="flex-1 w-full grid">

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>Coastal Haven</title>
+  <rect width="64" height="64" rx="16" fill="#0d2b45"/>
+  <path d="M13 42c5-5 10-5 15 0s10 5 15 0 10-5 15 0" fill="none" stroke="#56c9c2" stroke-linecap="round" stroke-width="4"/>
+  <path d="M19 38V27l13-10 13 10v11" fill="#1d9f9c"/>
+  <path d="M16 27h32L32 14 16 27Z" fill="#56c9c2"/>
+  <path d="M28 38v-7h8v7" fill="#0d2b45"/>
+</svg>

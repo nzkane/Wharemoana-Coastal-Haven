@@ -310,7 +310,9 @@
   .sc-copy--hero {
     text-align: center;
     margin: 0 auto;
-    max-width: 800px;
+    width: min(92vw, 78rem);
+    max-width: 100%;
+    padding-inline: 1rem;
   }
   @media (min-width: 861px) {
     .hero-bg {
@@ -318,10 +320,13 @@
       object-position: 50% 45%;
     }
     .sc-copy--hero {
-      max-width: 95vw;
+      width: min(94vw, 92rem);
+      padding-inline: clamp(1rem, 3vw, 3rem);
     }
     .sc-copy--hero .sc-display--xl {
-      font-size: clamp(3rem, 9.5vw, 6.25rem);
+      font-size: clamp(3rem, min(9.5vw, 12vh), 6.25rem);
+      letter-spacing: -0.045em;
+      line-height: 0.98;
       white-space: nowrap;
     }
   }
@@ -344,6 +349,12 @@
     border-radius: 1rem;
     box-shadow: 0 10px 30px rgba(26, 46, 53, 0.05);
     margin: 1rem 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .rating-container {
+    align-items: center;
+    row-gap: 0.75rem;
   }
   .rating-badge {
     display: inline-block;
@@ -556,7 +567,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2rem;
+    gap: 2rem;
+    padding: clamp(1.1rem, 2vw, 1.5rem) clamp(1.25rem, 4vw, 4rem);
     position: fixed;
     top: 0;
     left: 0;
@@ -570,6 +582,8 @@
     align-items: center;
     gap: 0.7rem;
     color: inherit;
+    min-width: 0;
+    white-space: nowrap;
   }
   .brand-mark {
     display: inline-flex;
@@ -613,6 +627,16 @@
       0 0 0.1rem rgba(255, 252, 244, 1),
       0 0 0.42rem rgba(255, 224, 183, 0.88),
       0 0 0.9rem rgba(255, 190, 121, 0.48);
+  }
+  .testimonials-stage > * {
+    min-width: 0;
+  }
+  .testimonials-stage > .sc-stack {
+    flex: 0 1 38%;
+  }
+  .testimonials-stage > .w-full {
+    flex: 1 1 62%;
+    min-width: 0;
   }
 }
 
