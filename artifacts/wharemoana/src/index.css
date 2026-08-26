@@ -356,6 +356,11 @@
     align-items: center;
     row-gap: 0.75rem;
   }
+  @media (min-width: 769px) {
+    .rating-container {
+      display: none;
+    }
+  }
   .rating-badge {
     display: inline-block;
     padding: 0.5rem 1rem;
