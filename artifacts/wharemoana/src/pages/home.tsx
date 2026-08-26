@@ -213,6 +213,9 @@ export default function Home() {
               <img className="gallery-item shadow-2xl" src="/images/47-the-strand-apartment-ground-level-russell-pic-15.jpg" alt="Property View 2" />
               <img className="gallery-item shadow-2xl" src="/images/47-the-strand-apartment-ground-level-russell-pic-18.jpg" alt="Property View 3" />
               <img className="gallery-item shadow-2xl" src="/images/AzRT8xsWDLcQL9frPSuXFfBPP68gnzkfmgGPsxCmnowuVp_VK83QtIkP7Bd-6IIMwiROqBrdlWDirPkD6G3uzN_6qHlCogqw-oBuRWLyG2SGXykKqjA74N8N-vg77cB8n6ToW5wMFOrOeg5hTFf5yumpw2SbxzjTTx8rNW8ugR8r4ss25c4=.jpg" alt="Property View 4" />
+               <img className="gallery-item shadow-2xl" src="/images/russell-wharf-at-dusk.png" alt="Russell wharf at dusk" />
+               <img className="gallery-item shadow-2xl" src="/images/russell-beach.png" alt="Russell beach and waterfront" />
+               <img className="gallery-item shadow-2xl" src="/images/russell-boats.png" alt="Boats on the Russell waterfront" />
             </div>
             <button
               type="button"
