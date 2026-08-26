@@ -1,20 +1,28 @@
 # n8n Booking Webhook
 
-The public booking form submits to the app's same-origin `POST /api/enquiries`
-endpoint. The API validates the enquiry and forwards it server-side to n8n.
-The n8n URL is never sent to the browser.
+The public booking form submits to the site's same-origin `POST /api/enquiries`
+endpoint. In the Cloudflare deployment, the Pages Function at
+`functions/api/enquiries.ts` validates the enquiry and forwards it server-side
+to n8n. The n8n URL is never sent to the browser.
 
 ## Secrets
 
-Configure these server-side secrets in each environment that runs the API:
+For Cloudflare Pages, configure these encrypted environment variables in the
+Pages project. The names are also documented in
+`artifacts/wharemoana/.env.example`:
 
-- `N8N_BOOKING_WEBHOOK_URL` — the n8n production webhook URL
-- `N8N_BOOKING_WEBHOOK_SECRET` — optional shared secret sent as
+- `WEBHOOK_URL` — the n8n production webhook URL
+- `WEBHOOK_SECRET` — optional shared secret sent as
   `X-Booking-Webhook-Secret`
 
 Use the production webhook URL for the live site and keep a separate n8n test
-webhook for development. Do not put either value in frontend code or commit
-them to the repository.
+webhook for development. `WEBHOOK_URL` must use HTTPS so guest details and the
+optional shared secret are encrypted in transit. Do not put either value in
+frontend code or commit them to the repository.
+
+The separate Replit API keeps its existing `N8N_BOOKING_WEBHOOK_URL` and
+`N8N_BOOKING_WEBHOOK_SECRET` names only for the current Replit preview. The
+Cloudflare Pages Function does not read those Replit variables.
 
 ## JSON payload
 
@@ -45,7 +53,21 @@ missing webhook configuration as `503`; each returns `{ "error": "..." }`.
 
 ## Cloudflare path
 
-When the site moves to Cloudflare Pages, keep the same `/api/enquiries`
-boundary by hosting the forwarding handler in a Cloudflare Worker or Pages
-Function. Reuse the payload and secret names above so the browser and n8n
-workflow do not need to change.
+Cloudflare Pages maps `functions/api/enquiries.ts` to `/api/enquiries`
+automatically. The generated browser client already targets that local path,
+so no absolute API or webhook URL is required in the frontend. Cloudflare
+dashboard variables provide the runtime values; `.env.example` is
+documentation only.
+
+## Cloudflare Pages build settings
+
+Set the Cloudflare Pages project root to `artifacts/wharemoana`, then use:
+
+- Build command: `pnpm run build`
+- Build output directory: `dist/public`
+
+If the Pages project must use the repository root instead, use
+`pnpm --filter @workspace/wharemoana run build` and set the output directory
+to `artifacts/wharemoana/dist/public`. The production build defaults to `/`
+for its Vite base path and does not require Replit's `PORT` or `BASE_PATH`
+variables.
