@@ -38,6 +38,11 @@ success response only after n8n responds with a 2xx status. Missing
 configuration, timeouts, and upstream failures return a safe error to the
 guest without exposing webhook details.
 
+Arrival and departure values are accepted only as real `YYYY-MM-DD` calendar
+dates, so n8n receives the same date strings the guest entered. The API
+documents validation errors as `400`, n8n communication failures as `502`, and
+missing webhook configuration as `503`; each returns `{ "error": "..." }`.
+
 ## Cloudflare path
 
 When the site moves to Cloudflare Pages, keep the same `/api/enquiries`

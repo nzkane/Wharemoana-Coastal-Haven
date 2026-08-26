@@ -32,6 +32,29 @@ function getBookingWebhookUrl(rawUrl: string | undefined): URL | null {
   }
 }
 
+function getStrictDateOnly(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return null;
+
+  const [, yearString, monthString, dayString] = match;
+  const year = Number(yearString);
+  const month = Number(monthString);
+  const day = Number(dayString);
+  const date = new Date(Date.UTC(year, month - 1, day));
+
+  if (
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCDate() !== day
+  ) {
+    return null;
+  }
+
+  return value;
+}
+
 router.use(healthRouter);
 
 router.post("/enquiries", async (req, res): Promise<void> => {
@@ -42,9 +65,18 @@ router.post("/enquiries", async (req, res): Promise<void> => {
     return;
   }
 
-  const { name, email, checkIn, checkOut, guests, message } = parsed.data;
+  const { name, email, guests, message } = parsed.data;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !Number.isInteger(guests)) {
     res.status(400).json({ error: "Please enter a valid email address and whole number of guests." });
+    return;
+  }
+
+  const checkIn = getStrictDateOnly(req.body?.checkIn);
+  const checkOut = getStrictDateOnly(req.body?.checkOut);
+  if (!checkIn || !checkOut) {
+    res.status(400).json({
+      error: "Please enter valid arrival and departure dates.",
+    });
     return;
   }
 
@@ -71,8 +103,8 @@ router.post("/enquiries", async (req, res): Promise<void> => {
     submittedAt: new Date().toISOString(),
     name,
     email,
-    checkIn: checkIn.toISOString().slice(0, 10),
-    checkOut: checkOut.toISOString().slice(0, 10),
+    checkIn,
+    checkOut,
     guests,
     message,
   };
