@@ -140,8 +140,8 @@ export const getCreateStayEnquiryUrl = () => {
 }
 
 /**
- * Validates a guest enquiry and returns an addressed email draft for the property contact.
- * @summary Prepare a stay enquiry email
+ * Validates a guest enquiry and forwards it to the configured n8n booking workflow.
+ * @summary Send a stay enquiry to the booking workflow
  */
 export const createStayEnquiry = async (stayEnquiryInput: StayEnquiryInput, options?: Parameters<typeof customFetch>[1]): Promise<StayEnquiryResponse> => {
 
@@ -190,7 +190,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
     export type CreateStayEnquiryMutationError = ErrorType<ErrorResponse>
 
     /**
- * @summary Prepare a stay enquiry email
+ * @summary Send a stay enquiry to the booking workflow
  */
 export const useCreateStayEnquiry = <TError = ErrorType<ErrorResponse>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createStayEnquiry>>, TError,{data: BodyType<StayEnquiryInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
@@ -202,3 +202,4 @@ export const useCreateStayEnquiry = <TError = ErrorType<ErrorResponse>,
       > => {
       return useMutation(getCreateStayEnquiryMutationOptions(options));
     }
+

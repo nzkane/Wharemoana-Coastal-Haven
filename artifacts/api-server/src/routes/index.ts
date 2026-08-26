@@ -6,10 +6,35 @@ import {
 import healthRouter from "./health";
 
 const router: IRouter = Router();
+const BOOKING_WEBHOOK_URL_ENV = "N8N_BOOKING_WEBHOOK_URL";
+const BOOKING_WEBHOOK_SECRET_ENV = "N8N_BOOKING_WEBHOOK_SECRET";
+const BOOKING_WEBHOOK_TIMEOUT_MS = 10_000;
+
+type BookingWebhookPayload = {
+  source: "wharemoana-booking-form";
+  submittedAt: string;
+  name: string;
+  email: string;
+  checkIn: string;
+  checkOut: string;
+  guests: number;
+  message: string;
+};
+
+function getBookingWebhookUrl(rawUrl: string | undefined): URL | null {
+  if (!rawUrl?.trim()) return null;
+
+  try {
+    const url = new URL(rawUrl.trim());
+    return url.protocol === "http:" || url.protocol === "https:" ? url : null;
+  } catch {
+    return null;
+  }
+}
 
 router.use(healthRouter);
 
-router.post("/enquiries", (req, res): void => {
+router.post("/enquiries", async (req, res): Promise<void> => {
   const parsed = CreateStayEnquiryBody.safeParse(req.body);
   if (!parsed.success) {
     req.log.warn({ errors: parsed.error.flatten() }, "Invalid stay enquiry");
@@ -28,31 +53,71 @@ router.post("/enquiries", (req, res): void => {
     return;
   }
 
-  const recipient = "info@housebythesea.co.nz";
-  const subject = `Stay enquiry from ${name}`;
-  const formattedCheckIn = checkIn.toISOString().slice(0, 10);
-  const formattedCheckOut = checkOut.toISOString().slice(0, 10);
-  const body = [
-    "Hello Wharemoana,",
-    "",
-    "I would like to enquire about a stay.",
-    "",
-    `Name: ${name}`,
-    `Email: ${email}`,
-    `Check-in: ${formattedCheckIn}`,
-    `Check-out: ${formattedCheckOut}`,
-    `Guests: ${guests}`,
-    "",
-    "Message:",
-    message,
-  ].join("\n");
+  const configuredUrl = process.env[BOOKING_WEBHOOK_URL_ENV];
+  const webhookUrl = getBookingWebhookUrl(configuredUrl);
+  if (!webhookUrl) {
+    req.log.error(
+      { configured: Boolean(configuredUrl?.trim()) },
+      "Booking webhook is not configured",
+    );
+    res.status(503).json({
+      error: "Booking enquiries are temporarily unavailable. Please try again later.",
+    });
+    return;
+  }
 
-  const response = CreateStayEnquiryResponse.parse({
-    status: "ready",
-    recipient,
-    subject,
-    body,
-  });
+  const payload: BookingWebhookPayload = {
+    source: "wharemoana-booking-form",
+    submittedAt: new Date().toISOString(),
+    name,
+    email,
+    checkIn: checkIn.toISOString().slice(0, 10),
+    checkOut: checkOut.toISOString().slice(0, 10),
+    guests,
+    message,
+  };
+  const secret = process.env[BOOKING_WEBHOOK_SECRET_ENV]?.trim();
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), BOOKING_WEBHOOK_TIMEOUT_MS);
+
+  try {
+    const webhookResponse = await fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(secret ? { "X-Booking-Webhook-Secret": secret } : {}),
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+
+    if (!webhookResponse.ok) {
+      req.log.error(
+        { statusCode: webhookResponse.status },
+        "Booking webhook rejected enquiry",
+      );
+      res.status(502).json({
+        error: "We could not send your enquiry. Please try again later.",
+      });
+      return;
+    }
+  } catch (error) {
+    req.log.error(
+      {
+        errorName: error instanceof Error ? error.name : "UnknownError",
+        timedOut: error instanceof Error && error.name === "AbortError",
+      },
+      "Booking webhook request failed",
+    );
+    res.status(502).json({
+      error: "We could not send your enquiry. Please try again later.",
+    });
+    return;
+  } finally {
+    clearTimeout(timeout);
+  }
+
+  const response = CreateStayEnquiryResponse.parse({ status: "submitted" });
   res.json(response);
 });
 

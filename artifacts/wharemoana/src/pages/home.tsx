@@ -30,7 +30,6 @@ export default function Home() {
   const [feedback, setFeedback] = useState<{
     kind: 'success' | 'error';
     message: string;
-    mailto?: string;
   } | null>(null);
   const [today] = useState(() => new Date().toISOString().slice(0, 10));
 
@@ -72,19 +71,16 @@ export default function Home() {
     setFeedback(null);
 
     try {
-      const response = await createStayEnquiry({
+      await createStayEnquiry({
         ...enquiry,
         guests: Number(enquiry.guests),
       });
-      const mailto = `mailto:${response.recipient}?subject=${encodeURIComponent(response.subject)}&body=${encodeURIComponent(response.body)}`;
 
       setFeedback({
         kind: 'success',
-        message: 'Your email app should open with your enquiry addressed to Wharemoana. Please press send there to complete it.',
-        mailto,
+        message: 'Thanks — your enquiry has been sent. We’ll be in touch soon.',
       });
       setEnquiry(emptyEnquiry);
-      window.location.assign(mailto);
     } catch (error) {
       const responseData =
         typeof error === 'object' && error !== null && 'data' in error
@@ -102,7 +98,7 @@ export default function Home() {
         kind: 'error',
         message: serverMessage
           ? `${serverMessage} You can also email ${PROPERTY_EMAIL} directly.`
-          : `We could not prepare your email. Please try again or email ${PROPERTY_EMAIL} directly.`,
+          : `We could not send your enquiry. Please try again or email ${PROPERTY_EMAIL} directly.`,
       });
     } finally {
       setIsSubmitting(false);
@@ -356,7 +352,7 @@ export default function Home() {
                   </label>
                 </div>
                 <button className="enquiry-submit" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? 'Preparing your email…' : 'Send enquiry'}
+                  {isSubmitting ? 'Sending your enquiry…' : 'Send enquiry'}
                 </button>
                 {feedback && (
                   <p
@@ -364,10 +360,7 @@ export default function Home() {
                     role={feedback.kind === 'error' ? 'alert' : 'status'}
                     aria-live="polite"
                   >
-                    {feedback.message}{' '}
-                    {feedback.mailto && (
-                      <a href={feedback.mailto}>Open the email again</a>
-                    )}
+                    {feedback.message}
                   </p>
                 )}
               </form>

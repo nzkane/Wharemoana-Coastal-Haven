@@ -30,8 +30,8 @@ paths:
     post:
       operationId: createStayEnquiry
       tags: [enquiries]
-      summary: Prepare a stay enquiry email
-      description: Validates a guest enquiry and returns an addressed email draft for the property contact.
+      summary: Send a stay enquiry to the booking workflow
+      description: Validates a guest enquiry and forwards it to the configured n8n booking workflow.
       requestBody:
         required: true
         content:
@@ -40,7 +40,7 @@ paths:
               $ref: "#/components/schemas/StayEnquiryInput"
       responses:
         "200":
-          description: Email draft prepared
+          description: Enquiry accepted by the booking workflow
           content:
             application/json:
               schema:
@@ -96,18 +96,9 @@ components:
       properties:
         status:
           type: string
-          enum: [ready]
-        recipient:
-          type: string
-        subject:
-          type: string
-        body:
-          type: string
+          enum: [submitted]
       required:
         - status
-        - recipient
-        - subject
-        - body
     ErrorResponse:
       type: object
       properties:

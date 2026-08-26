@@ -10,5 +10,5 @@ export type StayEnquiryResponseStatus = typeof StayEnquiryResponseStatus[keyof t
 
 
 export const StayEnquiryResponseStatus = {
-  ready: 'ready',
+  submitted: 'submitted',
 } as const;

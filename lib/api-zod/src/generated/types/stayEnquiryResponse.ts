@@ -9,7 +9,4 @@ import type { StayEnquiryResponseStatus } from './stayEnquiryResponseStatus';
 
 export interface StayEnquiryResponse {
   status: StayEnquiryResponseStatus;
-  recipient: string;
-  subject: string;
-  body: string;
 }

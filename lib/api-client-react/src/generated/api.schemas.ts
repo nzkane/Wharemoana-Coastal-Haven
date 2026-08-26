@@ -35,16 +35,14 @@ export type StayEnquiryResponseStatus = typeof StayEnquiryResponseStatus[keyof t
 
 
 export const StayEnquiryResponseStatus = {
-  ready: 'ready',
+  submitted: 'submitted',
 } as const;
 
 export interface StayEnquiryResponse {
   status: StayEnquiryResponseStatus;
-  recipient: string;
-  subject: string;
-  body: string;
 }
 
 export interface ErrorResponse {
   error: string;
 }
+

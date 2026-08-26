@@ -16,9 +16,10 @@ export const HealthCheckResponse = zod.object({
   "status": zod.string()
 })
 
+
 /**
- * Validates a guest enquiry and returns an addressed email draft for the property contact.
- * @summary Prepare a stay enquiry email
+ * Validates a guest enquiry and forwards it to the configured n8n booking workflow.
+ * @summary Send a stay enquiry to the booking workflow
  */
 export const createStayEnquiryBodyNameMax = 100;
 
@@ -40,8 +41,7 @@ export const CreateStayEnquiryBody = zod.object({
 })
 
 export const CreateStayEnquiryResponse = zod.object({
-  "status": zod.enum(['ready']),
-  "recipient": zod.string(),
-  "subject": zod.string(),
-  "body": zod.string()
+  "status": zod.enum(['submitted'])
 })
+
+
