@@ -318,7 +318,7 @@
   @media (min-width: 861px) {
     .hero-bg {
       object-fit: cover;
-      object-position: 50% 45%;
+      object-position: 50% 20%;
     }
     .sc-copy--hero {
       width: min(94vw, 92rem);
@@ -339,7 +339,7 @@
   }
   @media (min-width: 861px) and (min-aspect-ratio: 2/1) {
     .hero-bg {
-      object-position: 50% 55%;
+      object-position: 50% 20%;
     }
   }
   .review-card {
@@ -668,7 +668,7 @@
 
 @media (max-width: 860px) {
   .hero-bg {
-    object-position: 50% 42%;
+    object-position: 50% 20%;
   }
   .site-bar {
     padding-inline: 1.25rem;
