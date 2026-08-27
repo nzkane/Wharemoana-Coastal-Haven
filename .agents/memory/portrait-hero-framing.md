@@ -3,8 +3,8 @@ name: Portrait hero framing
 description: Responsive visual treatment for Wharemoana's portrait beach-facing hero photo.
 ---
 
-Use an edge-to-edge scenic crop for taller desktop viewports, but preserve the full portrait photo against a calm coastal color field in short, wide desktop windows. Keep the hero heading on one desktop line.
+Desktop always uses a full-bleed `object-fit: cover` crop for the hero photo, at every desktop aspect ratio including short/wide windows. Mobile/narrow framing is unchanged.
 
-**Why:** The supplied beach-facing photo is portrait-oriented. A wide, short viewport cannot show its sky, house, shoreline, and water simultaneously with an undistorted full-bleed crop. The user rejected both aggressive cropping and blurred duplicate-image side fills.
+**Why:** An earlier version used `object-fit: contain` with a neutral color-field fill on short, wide desktop windows, to avoid losing parts of the portrait photo (sky/house/shoreline/water can't all fit in an undistorted wide crop). The user explicitly asked (2026-08-27) to reverse that and always fill the screen edge-to-edge on desktop instead, accepting that very wide/short windows crop out some scene elements.
 
-**How to apply:** Treat viewport aspect ratio as part of hero art direction. For a wide, short viewport, contain the image with a neutral color extension rather than cropping, stretching, or adding a blurred duplicate. For a taller desktop viewport, retain a cover crop that preserves the scenic composition.
+**How to apply:** Do not reintroduce `object-fit: contain` or a neutral-fill background for desktop breakpoints unless the user asks again. Adjust `object-position` per aspect-ratio breakpoint if the crop loses key subject matter, but keep `object-fit: cover` throughout desktop.

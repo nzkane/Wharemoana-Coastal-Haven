@@ -332,10 +332,8 @@
   }
   @media (min-width: 861px) and (min-aspect-ratio: 1.6/1) {
     .hero-bg {
-      object-fit: contain;
-      object-position: center;
-      background:
-        linear-gradient(180deg, #294f67 0%, #4c5d58 48%, #263d45 100%);
+      object-fit: cover;
+      object-position: 50% 50%;
     }
   }
   @media (min-width: 861px) and (min-aspect-ratio: 2/1) {
