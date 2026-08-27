@@ -11,6 +11,7 @@ type PagesFunctionContext = {
 type EnquiryPayload = {
   name: string;
   email: string;
+  phone: string;
   checkIn: string;
   checkOut: string;
   guests: number;
@@ -74,6 +75,7 @@ function validateEnquiry(body: unknown): EnquiryPayload | null {
   const values = body as Record<string, unknown>;
   const name = values.name;
   const email = values.email;
+  const phone = values.phone;
   const checkIn = getDateOnly(values.checkIn);
   const checkOut = getDateOnly(values.checkOut);
   const guests = values.guests;
@@ -86,6 +88,9 @@ function validateEnquiry(body: unknown): EnquiryPayload | null {
     typeof email !== "string" ||
     email.length > 254 ||
     !EMAIL_PATTERN.test(email) ||
+    typeof phone !== "string" ||
+    phone.length < 1 ||
+    phone.length > 30 ||
     !checkIn ||
     !checkOut ||
     checkOut <= checkIn ||
@@ -103,6 +108,7 @@ function validateEnquiry(body: unknown): EnquiryPayload | null {
   return {
     name,
     email,
+    phone,
     checkIn,
     checkOut,
     guests,

@@ -34,6 +34,7 @@ The API sends this shape to n8n:
   "submittedAt": "2026-08-26T04:00:00.000Z",
   "name": "Guest name",
   "email": "guest@example.com",
+  "phone": "+64 21 123 4567",
   "checkIn": "2026-12-01",
   "checkOut": "2026-12-07",
   "guests": 2,

@@ -7,6 +7,7 @@ const PROPERTY_EMAIL = 'info@housebythesea.co.nz';
 type EnquiryValues = {
   name: string;
   email: string;
+  phone: string;
   checkIn: string;
   checkOut: string;
   guests: string;
@@ -16,6 +17,7 @@ type EnquiryValues = {
 const emptyEnquiry: EnquiryValues = {
   name: '',
   email: '',
+  phone: '',
   checkIn: '',
   checkOut: '',
   guests: '2',
@@ -303,6 +305,18 @@ export default function Home() {
                       value={enquiry.email}
                       onChange={(event) => updateEnquiry('email', event.target.value)}
                       maxLength={254}
+                      required
+                    />
+                  </label>
+                  <label className="enquiry-field">
+                    <span>Phone</span>
+                    <input
+                      name="phone"
+                      type="tel"
+                      autoComplete="tel"
+                      value={enquiry.phone}
+                      onChange={(event) => updateEnquiry('phone', event.target.value)}
+                      maxLength={30}
                       required
                     />
                   </label>

@@ -17,6 +17,11 @@ export interface StayEnquiryInput {
   name: string;
   /** @maxLength 254 */
   email: string;
+  /**
+     * @minLength 1
+     * @maxLength 30
+     */
+  phone: string;
   checkIn: string;
   checkOut: string;
   /**

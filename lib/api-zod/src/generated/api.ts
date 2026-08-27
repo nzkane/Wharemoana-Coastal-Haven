@@ -25,6 +25,8 @@ export const createStayEnquiryBodyNameMax = 100;
 
 export const createStayEnquiryBodyEmailMax = 254;
 
+export const createStayEnquiryBodyPhoneMax = 30;
+
 export const createStayEnquiryBodyGuestsMax = 20;
 
 export const createStayEnquiryBodyMessageMax = 2000;
@@ -34,6 +36,7 @@ export const createStayEnquiryBodyMessageMax = 2000;
 export const CreateStayEnquiryBody = zod.object({
   "name": zod.string().min(1).max(createStayEnquiryBodyNameMax),
   "email": zod.string().max(createStayEnquiryBodyEmailMax),
+  "phone": zod.string().min(1).max(createStayEnquiryBodyPhoneMax),
   "checkIn": zod.coerce.date(),
   "checkOut": zod.coerce.date(),
   "guests": zod.number().min(1).max(createStayEnquiryBodyGuestsMax),

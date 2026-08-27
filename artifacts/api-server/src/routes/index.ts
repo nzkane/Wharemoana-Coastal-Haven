@@ -15,6 +15,7 @@ type BookingWebhookPayload = {
   submittedAt: string;
   name: string;
   email: string;
+  phone: string;
   checkIn: string;
   checkOut: string;
   guests: number;
@@ -65,9 +66,14 @@ router.post("/enquiries", async (req, res): Promise<void> => {
     return;
   }
 
-  const { name, email, guests, message } = parsed.data;
+  const { name, email, phone, guests, message } = parsed.data;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !Number.isInteger(guests)) {
     res.status(400).json({ error: "Please enter a valid email address and whole number of guests." });
+    return;
+  }
+
+  if (phone.trim().length < 1) {
+    res.status(400).json({ error: "Please enter a valid phone number." });
     return;
   }
 
@@ -103,6 +109,7 @@ router.post("/enquiries", async (req, res): Promise<void> => {
     submittedAt: new Date().toISOString(),
     name,
     email,
+    phone,
     checkIn,
     checkOut,
     guests,

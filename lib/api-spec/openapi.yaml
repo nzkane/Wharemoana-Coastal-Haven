@@ -82,6 +82,10 @@ components:
         email:
           type: string
           maxLength: 254
+        phone:
+          type: string
+          minLength: 1
+          maxLength: 30
         checkIn:
           type: string
           format: date
@@ -99,6 +103,7 @@ components:
       required:
         - name
         - email
+        - phone
         - checkIn
         - checkOut
         - guests
