@@ -128,11 +128,14 @@ export default function Home() {
       <main id="top">
         {/* 1 · RECOGNITION: Hero */}
         <section data-sc-act="flow" data-sc-drift="#f5f2eb" className="hero-section relative h-screen flex items-center justify-center overflow-hidden">
-          <img 
-            className="hero-bg" 
-            src="/images/47-the-strand-apartment-ground-level-russell-pic-10.jpg" 
-            alt="Wharemoana viewed from the beach" 
-          />
+          <picture>
+            <source media="(min-width: 861px)" srcSet="/images/wharemoana-hero-desktop.jpg" />
+            <img
+              className="hero-bg"
+              src="/images/47-the-strand-apartment-ground-level-russell-pic-10.jpg"
+              alt="Wharemoana viewed from the beach"
+            />
+          </picture>
           <div className="sc-copy sc-copy--hero z-10" data-sc-cue="0 0.6 0">
             <h1 className="sc-display sc-display--xl text-white drop-shadow-md" data-sc-kinetic="lines">
               A Coastal Haven
