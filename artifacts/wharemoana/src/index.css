@@ -315,9 +315,7 @@
     max-width: 100%;
     padding-inline: 1rem;
   }
-.scrollcraft-root .sc-copy--hero p.sc-body {
-  color: #fff;
-}
+
   @media (min-width: 861px) {
     .hero-bg {
       object-fit: cover;
@@ -765,4 +763,7 @@
   .sc-copy--hero {
     max-width: none;
   }
+}
+.sc-copy--hero .sc-body {
+  color: #fff !important;
 }
