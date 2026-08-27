@@ -143,7 +143,7 @@ export default function Home() {
             <h1 className="sc-display sc-display--xl text-white drop-shadow-md" data-sc-kinetic="lines">
               A Coastal Haven
             </h1>
-            <p className="sc-body text-white mt-4 text-lg drop-shadow-md">
+            <p className="sc-body text-white mt-4 text-white drop-shadow-md">
               House by the Sea (Wharemoana), Russell
             </p>
           </div>
