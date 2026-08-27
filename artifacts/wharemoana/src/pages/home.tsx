@@ -129,7 +129,10 @@ export default function Home() {
         {/* 1 · RECOGNITION: Hero */}
         <section data-sc-act="flow" data-sc-drift="#f5f2eb" className="hero-section relative h-screen flex items-center justify-center overflow-hidden">
           <picture>
-            <source media="(min-width: 861px)" srcSet="/images/wharemoana-hero-desktop.jpg" />
+            <source
+  media="(min-width: 861px)"
+  srcSet="/images/47-the-strand-apartment-ground-level-russell-pic-10.jpg"
+/>
             <img
               className="hero-bg"
               src="/images/47-the-strand-apartment-ground-level-russell-pic-10.jpg"
